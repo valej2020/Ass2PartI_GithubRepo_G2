@@ -1,4 +1,3 @@
-
 #include "M5Atom.h"
 
 void setup()
@@ -9,6 +8,7 @@ void setup()
 }
 
 int counter = 0;
+bool blink_on = false;
 
 void loop()
 {
@@ -21,77 +21,85 @@ void loop()
 
   if (counter == 0)
   {
+    //Nothing on screen
+    blink_on = false;
     M5.dis.clear();
     M5.dis.drawpix(0, 0x00f000);
   }
   else if (counter == 1)
   {
+    //Only 1 red LED
+    blink_on = false;
     M5.dis.clear();
     M5.dis.drawpix(2, 0x00f000);
   }
   else if (counter == 2)
   {
-    while (counter == 2)
-
-    {
-     
-      M5.dis.drawpix(0, 0x00f000);
-      M5.dis.drawpix(1, 0x00f000);
-      M5.dis.drawpix(2, 0x00f000);
-      M5.dis.drawpix(3, 0x00f000);
-      M5.dis.drawpix(4, 0x00f000);
-      M5.dis.drawpix(5, 0x00f000);
-      M5.dis.drawpix(6, 0x00f000);
-      M5.dis.drawpix(7, 0x00f000);
-      M5.dis.drawpix(8, 0x00f000);
-      M5.dis.drawpix(9, 0x00f000);
-      M5.dis.drawpix(10, 0x00f000);
-      M5.dis.drawpix(11, 0x00f000);
-      M5.dis.drawpix(12, 0x00f000);
-      M5.dis.drawpix(13, 0x00f000);
-      M5.dis.drawpix(14, 0x00f000);
-      M5.dis.drawpix(15, 0x00f000);
-      M5.dis.drawpix(16, 0x00f000);
-      M5.dis.drawpix(17, 0x00f000);
-      M5.dis.drawpix(18, 0x00f000);
-      M5.dis.drawpix(19, 0x00f000);
-      M5.dis.drawpix(20, 0x00f000);
-      M5.dis.drawpix(21, 0x00f000);
-      M5.dis.drawpix(22, 0x00f000);
-      M5.dis.drawpix(23, 0x00f000);
-      M5.dis.drawpix(24, 0x00f000);
-      M5.dis.drawpix(25, 0x00f000);
-      delay(100);
-      M5.dis.clear();
-      delay(100);
-      if (M5.Btn.wasReleased())
-      {
-        Serial.println("Infinite Press");
-        counter ++;
-      }
-    }
+    //Should paint the whole screen red
+    blink_on = true;
+    M5.dis.clear();
+    M5.dis.drawpix(0, 0x00f000);
+    M5.dis.drawpix(1, 0x00f000);
+    M5.dis.drawpix(2, 0x00f000);
+    M5.dis.drawpix(3, 0x00f000);
+    M5.dis.drawpix(4, 0x00f000);
+    M5.dis.drawpix(5, 0x00f000);
+    M5.dis.drawpix(6, 0x00f000);
+    M5.dis.drawpix(7, 0x00f000);
+    M5.dis.drawpix(8, 0x00f000);
+    M5.dis.drawpix(9, 0x00f000);
+    M5.dis.drawpix(10, 0x00f000);
+    M5.dis.drawpix(11, 0x00f000);
+    M5.dis.drawpix(12, 0x00f000);
+    M5.dis.drawpix(13, 0x00f000);
+    M5.dis.drawpix(14, 0x00f000);
+    M5.dis.drawpix(15, 0x00f000);
+    M5.dis.drawpix(16, 0x00f000);
+    M5.dis.drawpix(17, 0x00f000);
+    M5.dis.drawpix(18, 0x00f000);
+    M5.dis.drawpix(19, 0x00f000);
+    M5.dis.drawpix(20, 0x00f000);
+    M5.dis.drawpix(21, 0x00f000);
+    M5.dis.drawpix(22, 0x00f000);
+    M5.dis.drawpix(23, 0x00f000);
+    M5.dis.drawpix(24, 0x00f000);
+    M5.dis.drawpix(25, 0x00f000);
   }
   else if (counter == 3)
   {
+    //Only 1 red LED
+    blink_on = false;
     M5.dis.clear();
     M5.dis.drawpix(3, 0x00f000);
   }
   else if (counter == 4)
   {
+    //Only 1 red LED
+    blink_on = false;
     M5.dis.clear();
     M5.dis.drawpix(4, 0x00f000);
   }
   else if (counter == 5)
   {
+    //Only 1 red LED
+    blink_on = false;
     M5.dis.clear();
     M5.dis.drawpix(5, 0x00f000);
   }
 
   Serial.println(counter);
 
+  if (blink_on)
+  {
+    delay(100);
+    M5.dis.clear();
+    delay(100);
+  }
+
   delay(50);
   M5.update();
 }
+
 
 //#include "M5Atom.h"
 //
