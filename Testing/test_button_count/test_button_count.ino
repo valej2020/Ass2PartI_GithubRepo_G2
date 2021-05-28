@@ -25,16 +25,9 @@ void loop()
     //Nothing on screen
     blink_on = false;
     M5.dis.clear();
-    M5.dis.drawpix(0, 0x00f000);
   }
+ 
   else if (counter == 1)
-  {
-    //Only 1 red LED
-    blink_on = false;
-    M5.dis.clear();
-    M5.dis.drawpix(2, 0x00f000);
-  }
-  else if (counter == 2)
   {
     //Red blink
     blink_on = true;
@@ -66,7 +59,7 @@ void loop()
     M5.dis.drawpix(24, 0x00f000);
     M5.dis.drawpix(25, 0x00f000);
   }
-  else if (counter == 3)
+  else if (counter == 2)
   {
     //White blink
     blink_on = true;
@@ -98,14 +91,14 @@ void loop()
     M5.dis.drawpix(24, 0x707070);
     M5.dis.drawpix(25, 0x707070);
   }
-  else if (counter == 4)
+  else if (counter == 3)
   {
     //Only 1 red LED
     blink_on = false;
     M5.dis.clear();
     M5.dis.drawpix(4, 0x00f000);
   }
-  else if (counter == 5)
+  else if (counter == 4)
   {
     //Only 1 red LED
     blink_on = false;
