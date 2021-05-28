@@ -122,10 +122,11 @@ void loop()
     delay(100);
   }
 
-if (counter>6)
-{
-  counter==0;
+  if (counter >= 4)
+  {
+    counter = 0;
   }
+
   delay(50);
   M5.update();
 }
