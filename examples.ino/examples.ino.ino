@@ -1,3 +1,91 @@
+/*
+ created 24 March 2006
+ by Tom Igoe
+ 
+
+int analogValue = 0;    // variable to hold the analog value
+
+void setup() {
+  // open the serial port at 9600 bps:
+  Serial.begin(9600);
+}
+
+void loop() {
+  // read the analog input on pin 0:
+  analogValue = analogRead(0);
+
+  // print it out in many formats:
+  Serial.println(analogValue);       // print as an ASCII-encoded decimal
+  Serial.println(analogValue, DEC);  // print as an ASCII-encoded decimal
+  Serial.println(analogValue, HEX);  // print as an ASCII-encoded hexadecimal
+  Serial.println(analogValue, OCT);  // print as an ASCII-encoded octal
+  Serial.println(analogValue, BIN);  // print as an ASCII-encoded binary
+
+  // delay 10 milliseconds before the next reading:
+  delay(10);
+}
+
+// BUTTONS EXAMPLES
+
+/
+ * Button01.ino
+ * By: Mike Klepper
+ * Date: 26 April 2020
+ *
+ * Demonstrates all button events implemented in M5Stack's API
+ *
+ * See blog post on patriot-geek.blogspot.com
+ * for instructions.
+ */
+#include "M5Atom.h"
+
+void setup() 
+{
+  M5.begin(true, false, true);
+  delay(10);
+}
+
+void loop() 
+{
+  // Is the button currently down?
+  if(M5.Btn.isPressed())
+  {
+    Serial.println("isPressed");
+  }
+
+  // Is button currently up?
+  if(M5.Btn.isReleased())
+  {
+    Serial.println("isReleased");
+  }
+
+  // Corresponds to onMouseDown
+  if(M5.Btn.wasPressed())
+  {
+    Serial.println("wasPressed");
+  }
+
+  // Corresponds to onClick
+  if(M5.Btn.wasReleased())
+  {
+    Serial.println("wasReleased");
+  }
+
+  // Long press
+  if(M5.Btn.pressedFor(2000))
+  {
+    Serial.println("pressedFor");
+  }
+
+  // Long period of inactivity
+  if(M5.Btn.releasedFor(2000))
+  {
+    Serial.println("releasedFor");
+  }
+
+  delay(50);
+  M5.update();
+}
 
 
 
@@ -5,10 +93,7 @@
 
 
 
-
-
-
-
+/* ALL THE FOLLOWING EXAMPLES ARE ABOUT FLASHING PIXELS ON DISPLAY IN DIFFERENT WAYS
 /**
  * MorseCode.ino
  *
