@@ -15,7 +15,6 @@ int counter = 0;
 bool blink_on = false;
 
 void loop()
-{
 
   if (M5.Btn.wasPressed())
   {
@@ -121,6 +120,110 @@ void loop()
   if (counter >= 4)
   {
     counter = 0;
+  }
+
+  delay(50);
+  M5.update();
+
+
+  int count = 0;
+  float accX, accY, accZ;
+
+  if (M5.Btn.wasPressed())
+  {
+    counter++; //Increases the counter everytime the button is pressed
+    Serial.println("isPressed");
+  }
+
+  if (count == 0)
+  {
+  M5.IMU.getAccelData(&accX, &accY, &accZ);
+  if(accY < 0){
+  while (accY < 0){
+  M5.dis.clear();
+    M5.dis.drawpix(0, 0x00f000);
+    M5.dis.drawpix(1, 0x00f000);
+    M5.dis.drawpix(2, 0x00f000);
+    M5.dis.drawpix(3, 0x00f000);
+    M5.dis.drawpix(4, 0x00f000);
+    M5.dis.drawpix(5, 0x00f000);
+    M5.dis.drawpix(6, 0x00f000);
+    M5.dis.drawpix(7, 0x00f000);
+    M5.dis.drawpix(8, 0x00f000);
+    M5.dis.drawpix(9, 0x00f000);
+    M5.dis.drawpix(10, 0x00f000);
+    M5.dis.drawpix(11, 0x00f000);
+    M5.dis.drawpix(12, 0x00f000);
+    M5.dis.drawpix(13, 0x00f000);
+    M5.dis.drawpix(14, 0x00f000);
+    M5.dis.drawpix(15, 0x00f000);
+    M5.dis.drawpix(16, 0x00f000);
+    M5.dis.drawpix(17, 0x00f000);
+    M5.dis.drawpix(18, 0x00f000);
+    M5.dis.drawpix(19, 0x00f000);
+    M5.dis.drawpix(20, 0x00f000);
+    M5.dis.drawpix(21, 0x00f000);
+    M5.dis.drawpix(22, 0x00f000);
+    M5.dis.drawpix(23, 0x00f000);
+    M5.dis.drawpix(24, 0x00f000);
+    M5.dis.drawpix(25, 0x00f000);
+
+    M5.IMU.getAccelData(&accX, &accY, &accZ);
+  }
+  delay(100);
+}
+else {
+  M5.dis.clear();
+}
+}
+
+else if (count == 1)
+  {
+  M5.IMU.getAccelData(&accX, &accY, &accZ);
+  if(accY < 0){
+  while (accY < 0){
+  M5.dis.clear();
+    M5.dis.drawpix(0, 0x707070);
+    M5.dis.drawpix(1, 0x707070);
+    M5.dis.drawpix(2, 0x707070);
+    M5.dis.drawpix(3, 0x707070);
+    M5.dis.drawpix(4, 0x707070);
+    M5.dis.drawpix(5, 0x707070);
+    M5.dis.drawpix(6, 0x707070);
+    M5.dis.drawpix(7, 0x707070);
+    M5.dis.drawpix(8, 0x707070);
+    M5.dis.drawpix(9, 0x707070);
+    M5.dis.drawpix(10, 0x707070);
+    M5.dis.drawpix(11, 0x707070);
+    M5.dis.drawpix(12, 0x707070);
+    M5.dis.drawpix(13, 0x707070);
+    M5.dis.drawpix(14, 0x707070);
+    M5.dis.drawpix(15, 0x707070);
+    M5.dis.drawpix(16, 0x707070);
+    M5.dis.drawpix(17, 0x707070);
+    M5.dis.drawpix(18, 0x707070);
+    M5.dis.drawpix(19, 0x707070);
+    M5.dis.drawpix(20, 0x707070);
+    M5.dis.drawpix(21, 0x707070);
+    M5.dis.drawpix(22, 0x707070);
+    M5.dis.drawpix(23, 0x707070);
+    M5.dis.drawpix(24, 0x707070);
+    M5.dis.drawpix(25, 0x707070);
+
+    M5.IMU.getAccelData(&accX, &accY, &accZ);
+  }
+  delay(100);
+}
+else {
+  M5.dis.clear();
+}
+}
+
+Serial.println(count);
+
+if (count >= 2)
+  {
+    count = 0;
   }
 
   delay(50);
