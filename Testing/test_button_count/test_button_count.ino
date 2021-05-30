@@ -1,6 +1,6 @@
 #include "M5Atom.h"
 //TESTING BRANCHHHHH
-//HOLA
+//Working on accelerometer feature 
 void setup()
 {
   M5.begin(true, false, true);
