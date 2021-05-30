@@ -34,6 +34,9 @@ int full_screen[25] =
 
 int *display[1] = {full_screen};
 
+int counter = 0;
+bool blink_on = false;
+
 void setup()
 {
   M5.begin(true, false, true);
@@ -53,15 +56,14 @@ void setup()
   
 }
 
-int counter = 0;
-bool blink_on = false;
+
 
 void loop()
 {
 
   if (M5.Btn.wasPressed())
   {
-    counter++; //Increases the counter everytime the button is pressed
+    counter++; //Increases the counter when button is pressed
     Serial.println("isPressed");
   }
 
@@ -77,64 +79,14 @@ void loop()
     //Red blink
     blink_on = true;
     M5.dis.clear();
-    M5.dis.drawpix(0, 0x00f000);
-    M5.dis.drawpix(1, 0x00f000);
-    M5.dis.drawpix(2, 0x00f000);
-    M5.dis.drawpix(3, 0x00f000);
-    M5.dis.drawpix(4, 0x00f000);
-    M5.dis.drawpix(5, 0x00f000);
-    M5.dis.drawpix(6, 0x00f000);
-    M5.dis.drawpix(7, 0x00f000);
-    M5.dis.drawpix(8, 0x00f000);
-    M5.dis.drawpix(9, 0x00f000);
-    M5.dis.drawpix(10, 0x00f000);
-    M5.dis.drawpix(11, 0x00f000);
-    M5.dis.drawpix(12, 0x00f000);
-    M5.dis.drawpix(13, 0x00f000);
-    M5.dis.drawpix(14, 0x00f000);
-    M5.dis.drawpix(15, 0x00f000);
-    M5.dis.drawpix(16, 0x00f000);
-    M5.dis.drawpix(17, 0x00f000);
-    M5.dis.drawpix(18, 0x00f000);
-    M5.dis.drawpix(19, 0x00f000);
-    M5.dis.drawpix(20, 0x00f000);
-    M5.dis.drawpix(21, 0x00f000);
-    M5.dis.drawpix(22, 0x00f000);
-    M5.dis.drawpix(23, 0x00f000);
-    M5.dis.drawpix(24, 0x00f000);
-    M5.dis.drawpix(25, 0x00f000);
+    ALL_ON (display[0], RED);
   }
   else if (counter == 2)
   {
     //White blink 
     blink_on = true;
     M5.dis.clear();
-    M5.dis.drawpix(0, 0x707070);
-    M5.dis.drawpix(1, 0x707070);
-    M5.dis.drawpix(2, 0x707070);
-    M5.dis.drawpix(3, 0x707070);
-    M5.dis.drawpix(4, 0x707070);
-    M5.dis.drawpix(5, 0x707070);
-    M5.dis.drawpix(6, 0x707070);
-    M5.dis.drawpix(7, 0x707070);
-    M5.dis.drawpix(8, 0x707070);
-    M5.dis.drawpix(9, 0x707070);
-    M5.dis.drawpix(10, 0x707070);
-    M5.dis.drawpix(11, 0x707070);
-    M5.dis.drawpix(12, 0x707070);
-    M5.dis.drawpix(13, 0x707070);
-    M5.dis.drawpix(14, 0x707070);
-    M5.dis.drawpix(15, 0x707070);
-    M5.dis.drawpix(16, 0x707070);
-    M5.dis.drawpix(17, 0x707070);
-    M5.dis.drawpix(18, 0x707070);
-    M5.dis.drawpix(19, 0x707070);
-    M5.dis.drawpix(20, 0x707070);
-    M5.dis.drawpix(21, 0x707070);
-    M5.dis.drawpix(22, 0x707070);
-    M5.dis.drawpix(23, 0x707070);
-    M5.dis.drawpix(24, 0x707070);
-    M5.dis.drawpix(25, 0x707070);
+    ALL_ON (display[0], WHITE);
   }
   else if (counter == 3)
   {
@@ -167,4 +119,13 @@ void loop()
 
   delay(50);
   M5.update();
+}
+
+
+void ALL_ON(int arr[], int color)
+{
+    for (int i = 0; i < 25; i++)
+    {
+        M5.dis.drawpix(i, color);
+    }
 }
