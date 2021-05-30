@@ -6,7 +6,7 @@
  * 
  * Displays arrow indicating device orientation based on info from the MPU6886
  */
-
+ 
 
 #include "M5Atom.h"
 
