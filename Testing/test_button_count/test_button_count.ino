@@ -20,7 +20,7 @@ int n_average = 5;
 
 bool IMUFlag = false;
 
-//braking accelereatio threshold
+//braking accelereation threshold
 float ACCEL_THRESHOLD = 3.0;
 
 int full_screen[25] =
@@ -37,6 +37,8 @@ int *display[1] = {full_screen};
 
 int counter = 0;
 bool blink_on = false;
+
+
 
 void setup()
 {
