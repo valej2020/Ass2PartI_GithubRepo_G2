@@ -1,8 +1,8 @@
 #include "M5Atom.h"
 //TESTING BRANCHHHHH
-<<<<<<< HEAD
+
 //Working on accelerometer feature 
-=======
+
 //HOLA
 //Working con Accel 2 Branch
 
@@ -43,7 +43,7 @@ bool blink_on = false;
 
 
 
->>>>>>> Accel-Try-2
+
 void setup()
 {
   M5.begin(true, false, true);
