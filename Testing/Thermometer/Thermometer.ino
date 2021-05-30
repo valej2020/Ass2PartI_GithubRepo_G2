@@ -214,6 +214,11 @@ void loop()
     scaledAccY = accY * 1000;
     scaledAccZ = accZ * 1000;
 
+    if (M5.Btn.wasPressed())
+        {
+                mode_selection_on = false;
+        }
+
     if (abs(scaledAccX) < LOW_Threshold && abs(scaledAccY) < LOW_Threshold && abs(scaledAccZ) > HIGH_Threshold && scaledAccZ > 0)
     {
       //Facing Bottom
