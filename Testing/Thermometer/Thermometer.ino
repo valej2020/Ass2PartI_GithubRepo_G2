@@ -252,9 +252,9 @@ void loop()
         else if (mode_selected == 2)
         {
             for (int j = 0; j < 86400; j++) {
-            Ttemp =+ temp[j];
+            float Ttemp =+ temp[j];
               }
-              Avgtemp = Ttemp / 86400;
+              float Avgtemp = Ttemp / 86400;
 
               dtostrf(Avgtemp, 4, 2, buff);
               AvgtempStringC += buff;
