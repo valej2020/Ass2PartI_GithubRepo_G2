@@ -167,7 +167,7 @@ float tempC = 0;
 
 char buff[10]; //Buffer for holding the string of temperature
 
-int dotDuration = 400;
+int dotDuration = 500;
 
 float temp_avg = 0.0;
 
@@ -198,12 +198,12 @@ void loop()
 
         dtostrf(tempC, 4, 2, buff);
         tempStringC += buff;
-        tempStringC += "C ";
+        tempStringC += "C";
 
         float tempF = tempC * 9 / 5 + 32;
         dtostrf(tempF, 4, 2, buff);
         tempStringF += buff;
-        tempStringF += "F ";
+        tempStringF += "F";
         //Serial.printf(" Temp : %.2f F \r\n", tempF);
 
         M5.IMU.getAccelData(&accX, &accY, &accZ);
@@ -219,14 +219,8 @@ void loop()
         {
             Serial.println("wasPressed");
             //Toggles the mode switch
-            if (mode_selection_on == false)
-            {
-                mode_selection_on = true;
-            }
-            else if (mode_selection_on == true)
-            {
+
                 mode_selection_on = false;
-            }
         }
 
         if (abs(scaledAccX) < LOW_TOL && abs(scaledAccY) < LOW_TOL && abs(scaledAccZ) > HIGH_TOL && scaledAccZ > 0)
