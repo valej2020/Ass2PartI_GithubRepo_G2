@@ -1,11 +1,56 @@
 #include "M5Atom.h"
 //TESTING BRANCHHHHH
 //HOLA
+//Working con Accel 2 Branch
+
+//Defining Colors
+int WHITE = 0xffffff;
+int RED = 0x00ff00;
+int GREEN = 0xff0000;
+int BLUE = 0x0000ff;
+int BLACK = 0x000000;
+
+int colorList[] = {BLACK,GREEN,RED};
+
+float accX = 0;
+float accY = 0;
+float accZ = 0;
+
+int n_average = 5;
+
+bool IMUFlag = false;
+
+//braking accelereatio threshold 
+float ACCEL_THRESHOLD = 3.0;
+
+int full_screen[25] =
+    {
+        1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1,
+        1, 1, 1, 1, 1};
+
+
+int *display[1] = {full_screen};
+
 void setup()
 {
   M5.begin(true, false, true);
   delay(50);
   M5.dis.drawpix(0, 0xf00000);
+
+  if (M5.IMU.Init() == 0)
+    {
+        IMUFlag = true;
+        Serial.println("[OK] IMU ready");
+    }
+    else
+    {
+        IMUFlag = false;
+        Serial.println("[ERR] IMU failed!");
+    }
+  
 }
 
 int counter = 0;
