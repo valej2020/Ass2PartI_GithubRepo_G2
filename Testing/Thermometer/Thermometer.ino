@@ -23,6 +23,9 @@ float scaledAccZ = 0;
 
 int n_average = 15;
 
+float temp_value;
+float temp[86400];
+
 
 //List of screens
 int screen_off[25] =
@@ -194,6 +197,8 @@ void loop()
     //Sense Current Temperature
     String tempStringF = "";
     String tempStringC = "";
+    String AvgtempStringC = "";
+    String AvgtempStringF = "";
 
     M5.IMU.getTempData(&tempC);
     //Serial.printf(" Temp : %.2f C \r\n", tempC);
@@ -207,6 +212,15 @@ void loop()
     tempStringF += buff;
     tempStringF += "F ";
     //Serial.printf(" Temp : %.2f F \r\n", tempF);
+
+    for (int i = 0; i < 86400; i++) {
+              M5.IMU.getTempData(&temp_value);
+              temp[i] = temp_value;
+              delay(1000);
+              if (i>=86400){
+                i = 0;
+              }
+            }
 
 
     M5.IMU.getAccelData(&accX, &accY, &accZ);
@@ -237,8 +251,25 @@ void loop()
         }
         else if (mode_selected == 2)
         {
+            for (int j = 0; j < 86400; j++) {
+            Ttemp =+ temp[j];
+              }
+              Avgtemp = Ttemp / 86400;
 
-        }
+              dtostrf(Avgtemp, 4, 2, buff);
+              AvgtempStringC += buff;
+              AvgtempStringC += "C ";
+          
+              float AvgtempF = Avgtemp * 9 / 5 + 32;
+              dtostrf(AvgtempF, 4, 2, buff);
+              AvgtempStringF += buff;
+              AvgtempStringF += "F ";
+
+              dispTemp(AvgtempStringC);
+
+              //dispTemp(AvgtempStringF);
+            }
+            
         else if (mode_selected == 3)
         {
 
