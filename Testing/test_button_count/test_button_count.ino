@@ -123,11 +123,10 @@ void loop()
   {
     // Blinking when riding, RED solid when braking event is detected
 
-    // Finding threshold
     float accX = 0, accY = 0, accZ = 0;
     M5.IMU.getAccelData(&accX, &accY, &accZ);
     // Average the acceleration data
-    // find the "running average"
+    // find the average
     accX_avg = ((accX_avg * (n_average - 1)) + fabs(accX)) / n_average;
     accY_avg = ((accY_avg * (n_average - 1)) + fabs(accY)) / n_average;
     accZ_avg = ((accZ_avg * (n_average - 1)) + fabs(accZ)) / n_average;
