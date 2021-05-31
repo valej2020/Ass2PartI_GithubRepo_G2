@@ -213,7 +213,10 @@ void setup()
   {
     Serial.println("Error initializing the IMU!");
   }
+  DisplayBlank();
 }
+
+
 
 void loop()
 {
@@ -245,364 +248,365 @@ void loop()
     scaledAccY = accY * 1000;
     scaledAccZ = accZ * 1000;
 
-      //Selection of mode through button press
-      if (M5.Btn.wasPressed())
-      {
-        //Serial.println("wasPressed");
-        //Toggles the mode switch
+    //Selection of mode through button press
+    if (M5.Btn.wasPressed())
+    {
+      //Serial.println("wasPressed");
+      //Toggles the mode switch
 
-        mode_selection_on = false;
+      mode_selection_on = false;
+    }
+
+    if (abs(scaledAccX) < LOW_TOL && abs(scaledAccY) < LOW_TOL && abs(scaledAccZ) > HIGH_TOL && scaledAccZ > 0)
+    {
+      //Facing Bottom, read background temp as running average
+      //Get Time
+      Time = millis() / 1000.0;
+
+      //Get Running Average of Temperature every second
+      if (old_Time != Time)
+      {
+        temp_avg = ((temp_avg * (n_average - 1)) + tempC) / n_average;
+        n_average++;
+        Serial.println(temp_avg);
       }
 
-      if (abs(scaledAccX) < LOW_TOL && abs(scaledAccY) < LOW_TOL && abs(scaledAccZ) > HIGH_TOL && scaledAccZ > 0)
+      old_Time = Time;
+      drawArray(black_screen, colorList);
+    }
+
+    else if (abs(scaledAccX) < LOW_TOL && abs(scaledAccY) < LOW_TOL && abs(scaledAccZ) > HIGH_TOL && scaledAccZ < 0)
+    {
+      //Top Facing Code
+      switched_mode = false;
+
+      if (mode_selection_on)
       {
-        //Facing Bottom, read background temp as running average
-        //Get Time
-        Time = millis() / 1000.0;
-
-        //Get Running Average of Temperature every second
-        if (old_Time != Time)
-        {
-          temp_avg = ((temp_avg * (n_average - 1)) + tempC) / n_average;
-          n_average++;
-          Serial.println(temp_avg);
-        }
-
-        old_Time = Time;
-        drawArray(black_screen, colorList);
-      }
-
-      else if (abs(scaledAccX) < LOW_TOL && abs(scaledAccY) < LOW_TOL && abs(scaledAccZ) > HIGH_TOL && scaledAccZ < 0)
-      {
-        //Top Facing Code
-        switched_mode = false;
-
-        if (mode_selection_on)
-        {
-          drawArray(displayNumbers[displayed_mode], colorListMode);
-        }
-        else
-        {
-          selected_mode = displayed_mode;
-          //Mode activated
-
-          if (selected_mode == 1)
-          {
-            displayTemperature(tempStringC);
-          } else if (selected_mode == 2)
-          {
-            tempStringC = temp_avg;
-            tempStringC += "C";
-            displayTemperature(tempStringC);
-          }
-          else if (selected_mode == 3)
-          {
-            DisplayTemperatureScale(tempF);
-          }
-          else if (selected_mode == 4)
-          {
-            DisplayGraph();
-          }
-          else if (selected_mode == 5)
-          {
-            displayTemperature(tempStringF);
-          }
-        }
-      }
-
-      else if (abs(scaledAccX) < LOW_TOL && abs(scaledAccY) > HIGH_TOL && abs(scaledAccZ) < LOW_TOL && scaledAccY > 0)
-      {
-        //UpArrow
-      }
-
-      else if (abs(scaledAccX) < LOW_TOL && abs(scaledAccY) > HIGH_TOL && abs(scaledAccZ) < LOW_TOL && scaledAccY < 0)
-      {
-        //DownArrow
-      }
-
-      else if (abs(scaledAccX) > HIGH_TOL && abs(scaledAccY) < LOW_TOL && abs(scaledAccZ) < LOW_TOL && scaledAccX > 0)
-      {
-        mode_selection_on = true;
-        //LeftArrow
-        if (!switched_mode)
-        {
-          displayed_mode++;
-          if (displayed_mode > 5)
-          {
-            displayed_mode = 1;
-          }
-          else if (displayed_mode < 1)
-          {
-            displayed_mode = 5;
-          }
-        }
-        switched_mode = true;
+      
         drawArray(displayNumbers[displayed_mode], colorListMode);
-      }
-
-      else if (abs(scaledAccX) > HIGH_TOL && abs(scaledAccY) < LOW_TOL && abs(scaledAccZ) < LOW_TOL && scaledAccX < 0)
-      {
-        mode_selection_on = true;
-        //RightArrow
-        if (!switched_mode)
-        {
-          displayed_mode--;
-          if (displayed_mode > 5)
-          {
-            displayed_mode = 1;
-          }
-          else if (displayed_mode < 1)
-          {
-            displayed_mode = 5;
-          }
-        }
-        switched_mode = true;
-        drawArray(displayNumbers[displayed_mode], colorListMode);
+      
       }
       else
       {
-        //M5.dis.clear();
+        selected_mode = displayed_mode;
+        //Mode activated
+        if (selected_mode == 1)
+        {
+          displayTemperature(tempStringC);
+        } else if (selected_mode == 2)
+        {
+          tempStringC = temp_avg;
+          tempStringC += "C";
+          displayTemperature(tempStringC);
+        }
+        else if (selected_mode == 3)
+        {
+          DisplayTemperatureScale(tempF);
+        }
+        else if (selected_mode == 4)
+        {
+          DisplayGraph();
+        }
+        else if (selected_mode == 5)
+        {
+          displayTemperature(tempStringF);
+        }
       }
     }
 
-    M5.update();
-  }
-
-  void drawArray(int arr[], int colors[])
-  {
-    for (int i = 0; i < 25; i++)
+    else if (abs(scaledAccX) < LOW_TOL && abs(scaledAccY) > HIGH_TOL && abs(scaledAccZ) < LOW_TOL && scaledAccY > 0)
     {
-      M5.dis.drawpix(i, colors[arr[i]]);
+      //UpArrow
+    }
+
+    else if (abs(scaledAccX) < LOW_TOL && abs(scaledAccY) > HIGH_TOL && abs(scaledAccZ) < LOW_TOL && scaledAccY < 0)
+    {
+      //DownArrow
+    }
+
+    else if (abs(scaledAccX) > HIGH_TOL && abs(scaledAccY) < LOW_TOL && abs(scaledAccZ) < LOW_TOL && scaledAccX > 0)
+    {
+      mode_selection_on = true;
+      //LeftArrow
+      if (!switched_mode)
+      {
+        displayed_mode++;
+        if (displayed_mode > 5)
+        {
+          displayed_mode = 1;
+        }
+        else if (displayed_mode < 1)
+        {
+          displayed_mode = 5;
+        }
+      }
+      switched_mode = true;
+      drawArray(displayNumbers[displayed_mode], colorListMode);
+    }
+
+    else if (abs(scaledAccX) > HIGH_TOL && abs(scaledAccY) < LOW_TOL && abs(scaledAccZ) < LOW_TOL && scaledAccX < 0)
+    {
+      mode_selection_on = true;
+      //RightArrow
+      if (!switched_mode)
+      {
+        displayed_mode--;
+        if (displayed_mode > 5)
+        {
+          displayed_mode = 1;
+        }
+        else if (displayed_mode < 1)
+        {
+          displayed_mode = 5;
+        }
+      }
+      switched_mode = true;
+      drawArray(displayNumbers[displayed_mode], colorListMode);
+    }
+    else
+    {
+      //M5.dis.clear();
     }
   }
 
-  void DisplayBlank()
-  {
-    unsigned long currentTime = millis ();
+  M5.update();
+}
 
+void drawArray(int arr[], int colors[])
+{
+  for (int i = 0; i < 25; i++)
+  {
+    M5.dis.drawpix(i, colors[arr[i]]);
+  }
+}
+
+void DisplayBlank()
+{
+  unsigned long currentTime = millis ();
+
+  M5.dis.clear();
+  drawArray(black_screen, colorList);
+  while (millis() < currentTime + intervalDisplay) {
+
+  }
+
+}
+
+void displayTemperature(String temperature)
+{
+  temperature.toUpperCase();
+
+  int Length = temperature.length();
+
+  for (int i = 0; i < Length; i++)
+  {
+    char currentChar = temperature.charAt(i);
+    //Serial.println(currentChar);
+    unsigned long currentTime = 0;
+    if (currentChar == '.')
+    {
+      currentTime = millis();
+      drawArray(dot, colorList);
+      while (millis() < currentTime + intervalDisplay) {
+
+      }
+
+    }
+    else if (currentChar == '0')
+    {
+      currentTime = millis();
+      drawArray(zero, colorList);
+      while (millis() < currentTime + intervalDisplay) {
+
+      }
+    }
+    else if (currentChar == '1')
+    {
+      currentTime = millis();
+      drawArray(one, colorList);
+      while (millis() < currentTime + intervalDisplay) {
+
+      }
+    }
+    else if (currentChar == '2')
+    {
+      currentTime = millis();
+      drawArray(two, colorList);
+      while (millis() < currentTime + intervalDisplay) {
+
+      }
+    }
+    else if (currentChar == '3')
+    {
+      currentTime = millis();
+      drawArray(three, colorList);
+      while (millis() < currentTime + intervalDisplay) {
+
+      }
+    }
+    else if (currentChar == '4')
+    {
+      currentTime = millis();
+      drawArray(four, colorList);
+      while (millis() < currentTime + intervalDisplay) {
+
+      }
+    }
+    else if (currentChar == '5')
+    {
+      currentTime = millis();
+      drawArray(five, colorList);
+      while (millis() < currentTime + intervalDisplay) {
+
+      }
+    }
+    else if (currentChar == '6')
+    {
+      currentTime = millis();
+      drawArray(six, colorList);
+      while (millis() < currentTime + intervalDisplay) {
+
+      }
+    }
+    else if (currentChar == '7')
+    {
+      currentTime = millis();
+      drawArray(seven, colorList);
+      while (millis() < currentTime + intervalDisplay) {
+
+      }
+    }
+    else if (currentChar == '8')
+    {
+      currentTime = millis();
+      drawArray(eight, colorList);
+      while (millis() < currentTime + intervalDisplay) {
+
+      }
+    }
+    else if (currentChar == '9')
+    {
+      currentTime = millis();
+      drawArray(nine, colorList);
+      while (millis() < currentTime + intervalDisplay) {
+
+      }
+    }
+    else if (currentChar == 'C')
+    {
+      currentTime = millis();
+      drawArray(C, colorList);
+      while (millis() < currentTime + intervalDisplay) {
+
+      }
+    }
+    else if (currentChar == 'F')
+    {
+      currentTime = millis();
+      drawArray(F, colorList);
+      while (millis() < currentTime + intervalDisplay) {
+
+      }
+    }
+    else if (currentChar == ' ')
+    {
+      DisplayBlank();
+    }
+  }
+}
+
+void DisplayColor(int fillColor)
+{
+  for (int i = 0; i < 25; i++)
+  {
+    M5.dis.drawpix(i, fillColor);
+  }
+}
+
+void DisplayTemperatureScale(float tempF)
+{
+  float lowestTempF = 60;
+  float lowTempF = 70;
+  float midTempF = 80;
+  float highTempF = 90;
+  float highestTempF = 100;
+
+  if (tempF < lowestTempF)
+  {
+    DisplayColor(GRB_COLOR_BLUE);
+  }
+  else if (lowestTempF < tempF && tempF < lowTempF)
+  {
+    DisplayColor(GRB_COLOR_WHITE);
+  }
+  else if (lowTempF < tempF && tempF < midTempF)
+  {
+    DisplayColor(GRB_COLOR_GREEN);
+  }
+
+  else if (midTempF < tempF && tempF < highTempF)
+  {
+    DisplayColor(GRB_COLOR_YELLOW);
+  }
+
+  else if (highTempF < tempF && tempF < highestTempF)
+  {
+    DisplayColor(GRB_COLOR_ORANGE);
+  }
+
+  else if (tempF > highestTempF)
+  {
+    DisplayColor(GRB_COLOR_RED);
+  }
+
+  M5.dis.drawpix(0, 0, GRB_COLOR_BLUE);   // Green
+  M5.dis.drawpix(1, 0, GRB_COLOR_WHITE);  // Green
+  M5.dis.drawpix(2, 0, GRB_COLOR_GREEN);  // Green
+  M5.dis.drawpix(3, 0, GRB_COLOR_YELLOW); // Green
+  M5.dis.drawpix(4, 0, GRB_COLOR_ORANGE); // Green
+}
+
+void DisplayGraph()
+{
+  unsigned long currentTime = millis ();
+  {
+
+    //Print out data array elements
+    for (int i = 0; i < 5; i++)
+    {
+      M5.IMU.getTempData(&tempC);
+      temp_data[i] = tempC;
+    }
+
+    //Find Average
+    temp_graph_sum = 0;
+    for (int i = 0; i < 5; i++)
+    {
+      temp_graph_sum += temp_data[i];
+    }
+
+    float temp_average = temp_graph_sum / 5.00;
+
+    //Normalize to be accurate until 0.01 C
+    for (int i = 0; i < 5; i++)
+    {
+      temp_data[i] = (temp_data[i] - temp_average) * 100.00;
+    }
+    //Shift the graph to middle of screen
+    for (int i = 0; i < 5; i++)
+    {
+      temp_data[i] = temp_data[i] + 2;
+    }
+
+    //Plot array
     M5.dis.clear();
-    drawArray(black_screen, colorList);
-    while (millis() < currentTime + intervalDisplay) {
+    M5.dis.drawpix(0, temp_data[0], 0xff0000); // Green
+    M5.dis.drawpix(1, temp_data[1], 0xff0000); // Green
+    M5.dis.drawpix(2, temp_data[2], 0xff0000); // Green
+    M5.dis.drawpix(3, temp_data[3], 0xff0000); // Green
+    M5.dis.drawpix(4, temp_data[4], 0xff0000); // Green
+    while (millis() < currentTime + interval) {
 
-    }
-
-  }
-
-  void displayTemperature(String temperature)
-  {
-    temperature.toUpperCase();
-
-    int Length = temperature.length();
-
-    for (int i = 0; i < Length; i++)
-    {
-      char currentChar = temperature.charAt(i);
-      //Serial.println(currentChar);
-      unsigned long currentTime = 0;
-      if (currentChar == '.')
-      {
-        currentTime = millis();
-        drawArray(dot, colorList);
-        while (millis() < currentTime + intervalDisplay) {
-
-        }
-
-      }
-      else if (currentChar == '0')
-      {
-        currentTime = millis();
-        drawArray(zero, colorList);
-        while (millis() < currentTime + intervalDisplay) {
-
-        }
-      }
-      else if (currentChar == '1')
-      {
-        currentTime = millis();
-        drawArray(one, colorList);
-        while (millis() < currentTime + intervalDisplay) {
-
-        }
-      }
-      else if (currentChar == '2')
-      {
-        currentTime = millis();
-        drawArray(two, colorList);
-        while (millis() < currentTime + intervalDisplay) {
-
-        }
-      }
-      else if (currentChar == '3')
-      {
-        currentTime = millis();
-        drawArray(three, colorList);
-        while (millis() < currentTime + intervalDisplay) {
-
-        }
-      }
-      else if (currentChar == '4')
-      {
-        currentTime = millis();
-        drawArray(four, colorList);
-        while (millis() < currentTime + intervalDisplay) {
-
-        }
-      }
-      else if (currentChar == '5')
-      {
-        currentTime = millis();
-        drawArray(five, colorList);
-        while (millis() < currentTime + intervalDisplay) {
-
-        }
-      }
-      else if (currentChar == '6')
-      {
-        currentTime = millis();
-        drawArray(six, colorList);
-        while (millis() < currentTime + intervalDisplay) {
-
-        }
-      }
-      else if (currentChar == '7')
-      {
-        currentTime = millis();
-        drawArray(seven, colorList);
-        while (millis() < currentTime + intervalDisplay) {
-
-        }
-      }
-      else if (currentChar == '8')
-      {
-        currentTime = millis();
-        drawArray(eight, colorList);
-        while (millis() < currentTime + intervalDisplay) {
-
-        }
-      }
-      else if (currentChar == '9')
-      {
-        currentTime = millis();
-        drawArray(nine, colorList);
-        while (millis() < currentTime + intervalDisplay) {
-
-        }
-      }
-      else if (currentChar == 'C')
-      {
-        currentTime = millis();
-        drawArray(C, colorList);
-        while (millis() < currentTime + intervalDisplay) {
-
-        }
-      }
-      else if (currentChar == 'F')
-      {
-        currentTime = millis();
-        drawArray(F, colorList);
-        while (millis() < currentTime + intervalDisplay) {
-
-        }
-      }
-      else if (currentChar == ' ')
-      {
-        DisplayBlank();
-      }
     }
   }
-
-  void DisplayColor(int fillColor)
-  {
-    for (int i = 0; i < 25; i++)
-    {
-      M5.dis.drawpix(i, fillColor);
-    }
-  }
-
-  void DisplayTemperatureScale(float tempF)
-  {
-    float lowestTempF = 60;
-    float lowTempF = 70;
-    float midTempF = 80;
-    float highTempF = 90;
-    float highestTempF = 100;
-
-    if (tempF < lowestTempF)
-    {
-      DisplayColor(GRB_COLOR_BLUE);
-    }
-    else if (lowestTempF < tempF && tempF < lowTempF)
-    {
-      DisplayColor(GRB_COLOR_WHITE);
-    }
-    else if (lowTempF < tempF && tempF < midTempF)
-    {
-      DisplayColor(GRB_COLOR_GREEN);
-    }
-
-    else if (midTempF < tempF && tempF < highTempF)
-    {
-      DisplayColor(GRB_COLOR_YELLOW);
-    }
-
-    else if (highTempF < tempF && tempF < highestTempF)
-    {
-      DisplayColor(GRB_COLOR_ORANGE);
-    }
-
-    else if (tempF > highestTempF)
-    {
-      DisplayColor(GRB_COLOR_RED);
-    }
-
-    M5.dis.drawpix(0, 0, GRB_COLOR_BLUE);   // Green
-    M5.dis.drawpix(1, 0, GRB_COLOR_WHITE);  // Green
-    M5.dis.drawpix(2, 0, GRB_COLOR_GREEN);  // Green
-    M5.dis.drawpix(3, 0, GRB_COLOR_YELLOW); // Green
-    M5.dis.drawpix(4, 0, GRB_COLOR_ORANGE); // Green
-  }
-
-  void DisplayGraph()
-  {
-    unsigned long currentTime = millis ();
-    {
-
-      //Print out data array elements
-      for (int i = 0; i < 5; i++)
-      {
-        M5.IMU.getTempData(&tempC);
-        temp_data[i] = tempC;
-      }
-
-      //Find Average
-      temp_graph_sum = 0;
-      for (int i = 0; i < 5; i++)
-      {
-        temp_graph_sum += temp_data[i];
-      }
-
-      float temp_average = temp_graph_sum / 5.00;
-
-      //Normalize to be accurate until 0.01 C
-      for (int i = 0; i < 5; i++)
-      {
-        temp_data[i] = (temp_data[i] - temp_average) * 100.00;
-      }
-      //Shift the graph to middle of screen
-      for (int i = 0; i < 5; i++)
-      {
-        temp_data[i] = temp_data[i] + 2;
-      }
-
-      //Plot array
-      M5.dis.clear();
-      M5.dis.drawpix(0, temp_data[0], 0xff0000); // Green
-      M5.dis.drawpix(1, temp_data[1], 0xff0000); // Green
-      M5.dis.drawpix(2, temp_data[2], 0xff0000); // Green
-      M5.dis.drawpix(3, temp_data[3], 0xff0000); // Green
-      M5.dis.drawpix(4, temp_data[4], 0xff0000); // Green
-      while (millis() < currentTime + interval) {
-
-      }
-    }
-  }
+}
