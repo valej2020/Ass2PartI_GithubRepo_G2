@@ -24,15 +24,10 @@ float accZ = 0;
 unsigned int Time = 0;
 unsigned int old_Time = 0;
 
-
-unsigned long millisOfLastUpdate = 0;
-unsigned long millisBetweenUpdates = 50;
-
 unsigned long millisOfLastGraph = 0;
-unsigned long millisBetweenGraphs = 100;
 
-unsigned long TimeOfLastBlink = 0 ;
 unsigned long interval = 250;
+unsigned long intervalDisplay = 500;
 
 bool IMU6886Flag = false;
 
@@ -206,8 +201,11 @@ float temp_graph_sum = 0.0;
 
 void setup()
 {
+  unsigned long currentTime = millis (); 
   M5.begin(true, false, true);
-  delay(20);
+  while (millis()< currentTime + interval){
+
+  }
 
   IMU6886Flag = M5.IMU.Init() == 0;
 
@@ -380,9 +378,14 @@ void drawArray(int arr[], int colors[])
 
 void DisplayBlank()
 {
+  unsigned long currentTime = millis ();
+  
   M5.dis.clear();
   drawArray(black_screen, colorList);
-  delay(dotDuration);
+  while (millis()< currentTime + intervalDisplay){
+
+  }
+  
 }
 
 void displayTemperature(String temperature)
@@ -395,97 +398,111 @@ void displayTemperature(String temperature)
   {
     char currentChar = temperature.charAt(i);
     //Serial.println(currentChar);
-
+  unsigned long currentTime = 0;
     if (currentChar == '.')
     {
-      DisplayBlank();
-      M5.dis.clear();
+      currentTime = millis();
       drawArray(dot, colorList);
-      delay(dotDuration);
+      while (millis()< currentTime + intervalDisplay){
+
+  }
+      
     }
     else if (currentChar == '0')
     {
-      DisplayBlank();
-      M5.dis.clear();
+      currentTime = millis();
       drawArray(zero, colorList);
-      delay(dotDuration);
+      while (millis()< currentTime + intervalDisplay){
+
+  }
     }
     else if (currentChar == '1')
     {
-      DisplayBlank();
-      M5.dis.clear();
+       currentTime = millis();
       drawArray(one, colorList);
-      delay(dotDuration);
+      while (millis()< currentTime + intervalDisplay){
+
+  }
     }
     else if (currentChar == '2')
     {
-      DisplayBlank();
-      M5.dis.clear();
+       currentTime = millis();
       drawArray(two, colorList);
-      delay(dotDuration);
+      while (millis()< currentTime + intervalDisplay){
+
+  }
     }
     else if (currentChar == '3')
     {
-      DisplayBlank();
-      M5.dis.clear();
+      currentTime = millis();
       drawArray(three, colorList);
-      delay(dotDuration);
+      while (millis()< currentTime + intervalDisplay){
+
+  }
     }
     else if (currentChar == '4')
     {
-      DisplayBlank();
-      M5.dis.clear();
+       currentTime = millis();
       drawArray(four, colorList);
-      delay(dotDuration);
+      while (millis()< currentTime + intervalDisplay){
+
+  }
     }
     else if (currentChar == '5')
     {
-      DisplayBlank();
-      M5.dis.clear();
+      currentTime = millis();
       drawArray(five, colorList);
-      delay(dotDuration);
+      while (millis()< currentTime + intervalDisplay){
+
+  }
     }
     else if (currentChar == '6')
     {
-      DisplayBlank();
-      M5.dis.clear();
+       currentTime = millis();
       drawArray(six, colorList);
-      delay(dotDuration);
+      while (millis()< currentTime + intervalDisplay){
+
+  }
     }
     else if (currentChar == '7')
     {
-      DisplayBlank();
-      M5.dis.clear();
+       currentTime = millis();
       drawArray(seven, colorList);
-      delay(dotDuration);
+      while (millis()< currentTime + intervalDisplay){
+
+  }
     }
     else if (currentChar == '8')
     {
-      DisplayBlank();
-      M5.dis.clear();
+       currentTime = millis();
       drawArray(eight, colorList);
-      delay(dotDuration);
+      while (millis()< currentTime + intervalDisplay){
+
+  }
     }
     else if (currentChar == '9')
     {
-      DisplayBlank();
-      M5.dis.clear();
+       currentTime = millis();
       drawArray(nine, colorList);
-      delay(dotDuration);
+      while (millis()< currentTime + intervalDisplay){
+
+  }
     }
     else if (currentChar == 'C')
     {
-      DisplayBlank();
-      M5.dis.clear();
+       currentTime = millis();
       drawArray(C, colorList);
-      delay(dotDuration);
+      while (millis()< currentTime + intervalDisplay){
+
+  }
     }
     else if (currentChar == 'F')
     {
-      DisplayBlank();
-      M5.dis.clear();
+       currentTime = millis();
       drawArray(F, colorList);
-      delay(dotDuration);
+      while (millis()< currentTime + intervalDisplay){
+
+  }
     }
     else if (currentChar == ' ')
     {
@@ -548,8 +565,6 @@ void DisplayTemperatureScale(float tempF)
 void DisplayGraph()
 {
   unsigned long currentTime = millis ();
-//unsigned long currentMillis = millis ();
-//  if (currentMillis - millisOfLastGraph >= millisBetweenGraphs)
   {
 
   //Print out data array elements
