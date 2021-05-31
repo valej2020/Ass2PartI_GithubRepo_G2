@@ -1,10 +1,5 @@
 #include "M5Atom.h"
-//TESTING BRANCHHHHH
 
-//Working on accelerometer feature 
-
-//HOLA
-//Working con Accel 2 Branch
 
 //Defining Colors
 int WHITE = 0xffffff;
@@ -44,7 +39,15 @@ bool blink_on = false;
 unsigned long millisOfLastUpdate;
 unsigned long millisBetweenUpdates = 50;
 
+unsigned long millisOfLastBlink;
+unsigned long millisBetweenBlinks = 100;
+
 unsigned long currentMillis;
+
+unsigned long TimeOfLastBlink = 0 ;
+unsigned long interval = 100;
+
+int CTR = 1;
 
 
 void setup()
@@ -80,23 +83,18 @@ void loop()
   if (counter == 0)
   {
     //Nothing on screen
-    blink_on = false;
     M5.dis.clear();
   }
 
   else if (counter == 1)
   {
     //Red blink
-    blink_on = true;
-    M5.dis.clear();
-    ALL_ON (display[0], RED);
+    blinking(RED);
   }
   else if (counter == 2)
   {
     //White blink
-    blink_on = true;
-    M5.dis.clear();
-    ALL_ON (display[0], WHITE);
+    blinking (WHITE);
   }
   else if (counter == 3)
   {
@@ -112,15 +110,14 @@ void loop()
     accZ_avg = ((accZ_avg * (n_average - 1)) + fabs(accZ)) / n_average;
 
     Serial.println(accZ_avg * 10.0);
-    blink_on = false;
     M5.dis.clear();
-  if(((accX_avg * 10.0) <=ACCEL_THRESHOLD) || ((accY_avg * 10.0) <=ACCEL_THRESHOLD) || ((accZ_avg * 10.0) <=ACCEL_THRESHOLD) ){
-            blink_on = true;
-        }else{
-            blink_on = false;
-        }
-        M5.dis.clear();
-        ALL_ON(display[0], RED);
+    if (((accX_avg * 10.0) <= ACCEL_THRESHOLD) || ((accY_avg * 10.0) <= ACCEL_THRESHOLD) || ((accZ_avg * 10.0) <= ACCEL_THRESHOLD) ) {
+      blinking(RED);
+    } else {
+      //            blink_on = false;
+      ALL_ON(display[0], RED);
+    }
+
   }
   else if (counter == 4)
   {
@@ -135,37 +132,29 @@ void loop()
     accZ_avg = ((accZ_avg * (n_average - 1)) + fabs(accZ)) / n_average;
 
     Serial.println(accZ_avg * 10.0);
-    blink_on = false;
     M5.dis.clear();
-  if(((accX_avg * 10.0) <=ACCEL_THRESHOLD) || ((accY_avg * 10.0) <=ACCEL_THRESHOLD) || ((accZ_avg * 10.0) <=ACCEL_THRESHOLD) ){
-            blink_on = true;
-        }else{
-            blink_on = false;
-        }
-        M5.dis.clear();
-        ALL_ON(display[0], WHITE);
+    if (((accX_avg * 10.0) <= ACCEL_THRESHOLD) || ((accY_avg * 10.0) <= ACCEL_THRESHOLD) || ((accZ_avg * 10.0) <= ACCEL_THRESHOLD) ) {
+
+      blinking(WHITE);
+    } else {
+      ALL_ON(display[0], WHITE);
+    }
+
   }
 
   Serial.println(counter);
 
-  if (blink_on)
-  {
-    delay(100);
-    M5.dis.clear();
-    delay(100);
-  }
 
   if (counter >= 5)
   {
     counter = 0;
   }
-
-currentMillis = millis ();
+  currentMillis = millis();
   if (currentMillis - millisOfLastUpdate > millisBetweenUpdates)
-{
-  M5.update ();
-  millisOfLastUpdate = currentMillis; 
-}
+  {
+    M5.update ();
+    millisOfLastUpdate = currentMillis;
+  }
 
 }
 
@@ -177,4 +166,25 @@ void ALL_ON(int arr[], int color)
   {
     M5.dis.drawpix(i, color);
   }
+}
+
+void blinking( int color) {
+  unsigned long currentTime = millis();
+
+  if (currentTime - TimeOfLastBlink >= interval) {
+    TimeOfLastBlink = currentTime;
+
+    CTR++;
+
+    if (CTR % 2 == 0)
+      M5.dis.fillpix(color);
+
+
+    else
+      M5.dis.clear();
+
+  }
+
+  M5.update();
+
 }
