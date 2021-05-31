@@ -24,6 +24,16 @@ float accZ = 0;
 unsigned int Time = 0;
 unsigned int old_Time = 0;
 
+
+unsigned long millisOfLastUpdate = 0;
+unsigned long millisBetweenUpdates = 50;
+
+unsigned long millisOfLastGraph = 0;
+unsigned long millisBetweenGraphs = 100;
+
+unsigned long TimeOfLastBlink = 0 ;
+unsigned long interval = 400;
+
 bool IMU6886Flag = false;
 
 float LOW_TOL = 100;
@@ -537,6 +547,10 @@ void DisplayTemperatureScale(float tempF)
 
 void DisplayGraph()
 {
+//unsigned long currentMillis = millis ();
+//  if (currentMillis - millisOfLastGraph >= millisBetweenGraphs)
+  {
+ 
   //Print out data array elements
   for (int i = 0; i < 5; i++)
   {
@@ -572,4 +586,5 @@ void DisplayGraph()
   M5.dis.drawpix(3, temp_data[3], 0xff0000); // Green
   M5.dis.drawpix(4, temp_data[4], 0xff0000); // Green
   delay(250);
+ }
 }
