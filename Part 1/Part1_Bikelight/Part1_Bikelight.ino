@@ -41,7 +41,10 @@ int *display[1] = {full_screen};
 int counter = 0;
 bool blink_on = false;
 
+unsigned long millisOfLastUpdate;
+unsigned long millisBetweenUpdates = 50;
 
+unsigned long currentMillis;
 
 
 void setup()
@@ -157,9 +160,15 @@ void loop()
     counter = 0;
   }
 
-  delay(50);
-  M5.update();
+currentMillis = millis ();
+  if (currentMillis - millisOfLastUpdate > millisBetweenUpdates)
+{
+  M5.update ();
+  millisOfLastUpdate = currentMillis; 
 }
+
+}
+
 
 
 void ALL_ON(int arr[], int color)
