@@ -27,7 +27,7 @@ unsigned int old_Time = 0;
 unsigned long millisOfLastGraph = 0;
 
 unsigned long interval = 250;
-unsigned long intervalDisplay = 500;
+unsigned long intervalDisplay = 1000;
 
 bool IMU6886Flag = false;
 
@@ -38,6 +38,12 @@ float scaledAccX = 0;
 float scaledAccY = 0;
 float scaledAccZ = 0;
 int n_average = 1;
+
+
+//Tapping variables
+bool device_activated = false;
+int n_average_accel = 15;
+float accX_avg = 0;
 
 //List of screens
 int black_screen[25] =
@@ -248,12 +254,23 @@ void loop()
     scaledAccY = accY * 1000;
     scaledAccZ = accZ * 1000;
 
+    //Tap Detection
+    M5.IMU.getAccelData(&accX, &accY, &accZ);
+    accX_avg = ((accX_avg * (n_average_accel - 1)) + fabs(accX)) / n_average_accel;
+    float normalized_accX = accX_avg * 900;
+    Serial.println(normalized_accX);
+
+    if (normalized_accX >= 800)
+    {
+      device_activated = true;
+    }
+
+
     //Selection of mode through button press
     if (M5.Btn.wasPressed())
     {
       //Serial.println("wasPressed");
       //Toggles the mode switch
-
       mode_selection_on = false;
     }
 
@@ -282,9 +299,9 @@ void loop()
 
       if (mode_selection_on)
       {
-      
+
         drawArray(displayNumbers[displayed_mode], colorListMode);
-      
+
       }
       else
       {
