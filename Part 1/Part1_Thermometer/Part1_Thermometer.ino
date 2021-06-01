@@ -271,13 +271,18 @@ void loop()
     {
       //Serial.println("wasPressed");
       //Toggles the mode switch
-      mode_selection_on = false;
+      if (device_activated == true)
+      {
+        mode_selection_on = false;
+      }
+      device_activated = true;
     }
 
     if (abs(scaledAccX) < LOW_TOL && abs(scaledAccY) < LOW_TOL && abs(scaledAccZ) > HIGH_TOL && scaledAccZ > 0)
     {
       //Facing Bottom, read background temp as running average
       //Get Time
+      device_activated = false;
       Time = millis() / 1000.0;
 
       //Get Running Average of Temperature every second
@@ -294,43 +299,45 @@ void loop()
 
     else if (abs(scaledAccX) < LOW_TOL && abs(scaledAccY) < LOW_TOL && abs(scaledAccZ) > HIGH_TOL && scaledAccZ < 0)
     {
-      //Top Facing Code
-      switched_mode = false;
-
-      if (mode_selection_on)
+      if (device_activated)
       {
+        //Top Facing Code
+        switched_mode = false;
 
-        drawArray(displayNumbers[displayed_mode], colorListMode);
+        if (mode_selection_on)
+        {
 
-      }
-      else
-      {
-        selected_mode = displayed_mode;
-        //Mode activated
-        if (selected_mode == 1)
-        {
-          displayTemperature(tempStringC);
-        } else if (selected_mode == 2)
-        {
-          tempStringC = temp_avg;
-          tempStringC += "C";
-          displayTemperature(tempStringC);
+          drawArray(displayNumbers[displayed_mode], colorListMode);
+
         }
-        else if (selected_mode == 3)
+        else
         {
-          DisplayTemperatureScale(tempF);
-        }
-        else if (selected_mode == 4)
-        {
-          DisplayGraph();
-        }
-        else if (selected_mode == 5)
-        {
-          displayTemperature(tempStringF);
+          selected_mode = displayed_mode;
+          //Mode activated
+          if (selected_mode == 1)
+          {
+            displayTemperature(tempStringC);
+          } else if (selected_mode == 2)
+          {
+            tempStringC = temp_avg;
+            tempStringC += "C";
+            displayTemperature(tempStringC);
+          }
+          else if (selected_mode == 3)
+          {
+            DisplayTemperatureScale(tempF);
+          }
+          else if (selected_mode == 4)
+          {
+            DisplayGraph();
+          }
+          else if (selected_mode == 5)
+          {
+            displayTemperature(tempStringF);
+          }
         }
       }
     }
-
     else if (abs(scaledAccX) < LOW_TOL && abs(scaledAccY) > HIGH_TOL && abs(scaledAccZ) < LOW_TOL && scaledAccY > 0)
     {
       //UpArrow
@@ -343,42 +350,47 @@ void loop()
 
     else if (abs(scaledAccX) > HIGH_TOL && abs(scaledAccY) < LOW_TOL && abs(scaledAccZ) < LOW_TOL && scaledAccX > 0)
     {
-      mode_selection_on = true;
-      //LeftArrow
-      if (!switched_mode)
+      if (device_activated)
       {
-        displayed_mode++;
-        if (displayed_mode > 5)
+        mode_selection_on = true;
+        //LeftArrow
+        if (!switched_mode)
         {
-          displayed_mode = 1;
+          displayed_mode++;
+          if (displayed_mode > 5)
+          {
+            displayed_mode = 1;
+          }
+          else if (displayed_mode < 1)
+          {
+            displayed_mode = 5;
+          }
         }
-        else if (displayed_mode < 1)
-        {
-          displayed_mode = 5;
-        }
+        switched_mode = true;
+        drawArray(displayNumbers[displayed_mode], colorListMode);
       }
-      switched_mode = true;
-      drawArray(displayNumbers[displayed_mode], colorListMode);
     }
-
     else if (abs(scaledAccX) > HIGH_TOL && abs(scaledAccY) < LOW_TOL && abs(scaledAccZ) < LOW_TOL && scaledAccX < 0)
     {
-      mode_selection_on = true;
-      //RightArrow
-      if (!switched_mode)
+      if (device_activated)
       {
-        displayed_mode--;
-        if (displayed_mode > 5)
+        mode_selection_on = true;
+        //RightArrow
+        if (!switched_mode)
         {
-          displayed_mode = 1;
+          displayed_mode--;
+          if (displayed_mode > 5)
+          {
+            displayed_mode = 1;
+          }
+          else if (displayed_mode < 1)
+          {
+            displayed_mode = 5;
+          }
         }
-        else if (displayed_mode < 1)
-        {
-          displayed_mode = 5;
-        }
+        switched_mode = true;
+        drawArray(displayNumbers[displayed_mode], colorListMode);
       }
-      switched_mode = true;
-      drawArray(displayNumbers[displayed_mode], colorListMode);
     }
     else
     {
