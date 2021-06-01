@@ -319,6 +319,10 @@ void loop()
             displayTemperature(tempStringC);
           } else if (selected_mode == 2)
           {
+            if (temp_avg == 0.0)
+            {
+              temp_avg = tempC;
+            }
             tempStringC = temp_avg;
             tempStringC += "C";
             displayTemperature(tempStringC);
