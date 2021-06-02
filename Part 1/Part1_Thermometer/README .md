@@ -20,3 +20,15 @@ The thermometer has 5 different modes, represented on the screen of the atom by 
 3. Color scale of temperature range followed by the current temperature 
 4. Graph of the last 5 readings of temperature
 5. Show current temperature in degrees Fahrenheit
+
+
+Changing Modes:
+
+In order to change across modes the atom needs to be tilted to the right or to the left. 
+- Tilting to the right will go to the next mode
+- Tilting to the left will return to the previous one
+
+Selecting Mode:
+
+In order to selct the desired mode, the user should press the screen when the number of this mode is on the display. 
+
