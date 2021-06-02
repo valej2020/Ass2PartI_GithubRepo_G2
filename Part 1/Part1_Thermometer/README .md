@@ -48,9 +48,13 @@ To display the temperature as a color scale we used the coolest and hottest temp
 
 BLUE below 60 F 
 
-WHITE 60 - 70 F
+WHITE 60 - 70 F 
+
 GREEN 70 - 80 F
+
 YELLOW 80 - 90 F
+
 ORANGE 90 - 100 F
+
 RED  above 100 F
 
