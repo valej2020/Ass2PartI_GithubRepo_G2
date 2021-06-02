@@ -1,5 +1,5 @@
 # Bikelight_G2
- Bikelight coding project
+ Group 2 - Vale Juarez, Flavia Trotolo , Hamad Al Shamsi, Sayed Ali Madani
  
 # Description 
  This program provides the user with an automatic brake light for the M5 Stack Atom Matrix device. 
