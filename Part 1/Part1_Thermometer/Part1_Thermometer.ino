@@ -1,6 +1,6 @@
 #include "M5Atom.h"
 #include <stdlib.h>
-//jjjjzzsfaegavwzsefd
+
 int GRB_COLOR_WHITE = 0xffffff;
 int GRB_COLOR_BLACK = 0x000000;
 int GRB_COLOR_RED = 0x00ff00;
