@@ -1,5 +1,5 @@
 # Thermometer M5Stack Atom
-Group 2
+Group 2 - Vale Juarez, Flavia Trotolo , Hamad Al Shamsi, Sayed Ali Madani
 
 ## Description
 
