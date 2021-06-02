@@ -36,7 +36,7 @@ int *display[1] = {full_screen};
 int counter = 0;
 bool blink_on = false;
 
-unsigned long millisOfLastUpdate;
+unsigned long millisOfLastUpdate = 0;
 unsigned long millisBetweenUpdates = 50;
 
 unsigned long millisOfLastBlink;
@@ -52,8 +52,12 @@ int CTR = 1;
 
 void setup()
 {
+  unsigned long currentTime = millis ();
   M5.begin(true, false, true);
-  delay(50);
+  //  delay(50);
+  while (millis() < currentTime + interval) {
+
+  }
   M5.dis.drawpix(0, 0xf00000);
 
   if (M5.IMU.Init() == 0)
