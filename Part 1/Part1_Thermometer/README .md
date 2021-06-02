@@ -41,3 +41,12 @@ The user should wait until the display of temperature is finished (after the uni
 
 ## Color Scale 
 
+To display the temperature as a color scale we used the coolest and hottest temperature records in Abu Dhabi. The ranges of colors with respect to temperature readings are the following:
+
+BLUE below 60 F
+WHITE 60 - 70 F
+GREEN 70 - 80 F
+YELLOW 80 - 90 F
+ORANGE 90 - 100 F
+RED  above 100 F
+
