@@ -1,6 +1,6 @@
 #include "M5Atom.h"
-//dkxvjbsdjzfvasd
-//aoejgnaosjedgn
+
+
 //Defining Colors
 int WHITE = 0xffffff;
 int RED = 0x00ff00;
@@ -110,7 +110,7 @@ void loop()
     accZ_avg = ((accZ_avg * (n_average - 1)) + fabs(accZ)) / n_average;
 
     Serial.println(accZ_avg * 10.0);
-    M5.dis.clear();
+    //M5.dis.clear();
     if (((accX_avg * 10.0) <= ACCEL_THRESHOLD) || ((accY_avg * 10.0) <= ACCEL_THRESHOLD) || ((accZ_avg * 10.0) <= ACCEL_THRESHOLD) ) {
       blinking(RED);
     } else {
@@ -132,7 +132,7 @@ void loop()
     accZ_avg = ((accZ_avg * (n_average - 1)) + fabs(accZ)) / n_average;
 
     Serial.println(accZ_avg * 10.0);
-    M5.dis.clear();
+    //M5.dis.clear();
     if (((accX_avg * 10.0) <= ACCEL_THRESHOLD) || ((accY_avg * 10.0) <= ACCEL_THRESHOLD) || ((accZ_avg * 10.0) <= ACCEL_THRESHOLD) ) {
 
       blinking(WHITE);
