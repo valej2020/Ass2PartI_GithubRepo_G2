@@ -32,3 +32,12 @@ Selecting Mode:
 
 In order to selct the desired mode, the user should press the screen when the number of this mode is on the display. 
 
+
+Additional Instructions:
+
+The atom must be held with the screen facing upwards for it to work
+The user should wait until the display of temperature is finished (after the units) to switch modes. 
+
+
+## Color Scale 
+

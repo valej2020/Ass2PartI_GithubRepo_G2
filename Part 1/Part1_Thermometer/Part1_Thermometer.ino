@@ -330,13 +330,13 @@ void loop()
           }
           else if (selected_mode == 3)
           {
-            unsigned long currentTime = millis ();
+//            unsigned long currentTime = millis ();
             DisplayTemperatureScale(tempF);
             //            delay(1000);
-            while (millis() < currentTime + interval2) {
-
-            }
-            displayTemperature(tempStringC);
+//            while (millis() < currentTime + interval2) {
+//
+//            }
+//            displayTemperature(tempStringC);
           }
           else if (selected_mode == 4)
           {
