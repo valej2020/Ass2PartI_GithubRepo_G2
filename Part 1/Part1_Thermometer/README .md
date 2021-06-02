@@ -32,3 +32,29 @@ Selecting Mode:
 
 In order to selct the desired mode, the user should press the screen when the number of this mode is on the display. 
 
+
+Additional Instructions:
+
+The atom must be held with the screen facing upwards for it to work
+The user should wait until the display of temperature is finished (after the units) to switch modes. 
+
+## Library Dependencie
+
+- M5Atom 
+
+## Color Scale 
+
+To display the temperature as a color scale we used the coolest and hottest temperature records in Abu Dhabi. The ranges of colors with respect to temperature readings are the following:
+
+BLUE below 60 F 
+
+WHITE 60 - 70 F 
+
+GREEN 70 - 80 F
+
+YELLOW 80 - 90 F
+
+ORANGE 90 - 100 F
+
+RED  above 100 F
+
