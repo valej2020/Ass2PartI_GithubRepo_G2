@@ -27,6 +27,7 @@ unsigned int old_Time = 0;
 unsigned long millisOfLastGraph = 0;
 
 unsigned long interval = 250;
+unsigned long interval2 = 2500;
 unsigned long intervalDisplay = 1000;
 
 bool IMU6886Flag = false;
@@ -329,7 +330,13 @@ void loop()
           }
           else if (selected_mode == 3)
           {
+            unsigned long currentTime = millis ();
             DisplayTemperatureScale(tempF);
+            //            delay(1000);
+            while (millis() < currentTime + interval2) {
+
+            }
+            displayTemperature(tempStringC);
           }
           else if (selected_mode == 4)
           {
