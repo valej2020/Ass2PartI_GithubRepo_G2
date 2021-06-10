@@ -8,7 +8,7 @@ The development of this board is based around the ESP32 PICO processor, has a pr
 The program assumes that the power is already available and that the device is mounted with the USB-C plug mounted facing the ground and the LED Matrix facing towards the
 rear/front of the bike.
 
-Demonstration video: https://youtu.be/IbYTTPb3BjE
+Demonstration video: https://youtu.be/Wu54z0mk2nw
 
 The atom has the five different modes:
 1.  OFF: All LEDs off
