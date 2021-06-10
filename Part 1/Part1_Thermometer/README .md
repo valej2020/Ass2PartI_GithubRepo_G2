@@ -38,7 +38,7 @@ Additional Instructions:
 The atom must be held with the screen facing upwards for it to work
 The user should wait until the display of temperature is finished (after the units) to switch modes. 
 
-## Library Dependencie
+## Library Dependencies
 
 - M5Atom 
 
